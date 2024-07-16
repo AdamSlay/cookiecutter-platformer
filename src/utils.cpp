@@ -5,7 +5,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 
-std::string FONT_PATH = "../assets/SuperFunky.ttf";
+std::string FONT_PATH = "../assets/fonts/SuperFunky.ttf";
 int FONT_SIZE = 50;
 int SCREEN_WIDTH = 740;
 int SCREEN_HEIGHT = 420;
