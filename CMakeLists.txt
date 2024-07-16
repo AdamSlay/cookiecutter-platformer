@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 set(CMAKE_TOOLCHAIN_FILE "./vcpkg/scripts/buildsystems/vcpkg.cmake")
 
-project(cookiecutter-platformerer)
+project(cookiecutter-platformer)
 
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
@@ -16,7 +16,7 @@ set(SOURCE_FILES
 )
 add_library(cookiecutter-lib ${SOURCE_FILES})
 
-add_executable(cookiecutter-platformerer src/main.cpp)
+add_executable(cookiecutter-platformer src/main.cpp)
 
 target_link_libraries(cookiecutter-lib PUBLIC 
   SDL2::SDL2-static 
@@ -26,4 +26,4 @@ target_link_libraries(cookiecutter-lib PUBLIC
   nlohmann_json::nlohmann_json
 )
 
-target_link_libraries(cookiecutter-platformerer PRIVATE cookiecutter-lib)
+target_link_libraries(cookiecutter-platformer PRIVATE cookiecutter-lib)
