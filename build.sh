@@ -10,16 +10,21 @@ if [ ! -d "./vcpkg" ] ; then
   # remove vcpkg .git directory
   rm -rf ./vcpkg/.git
 
-  # install project dependencies from vcpkg.json file in project root
-  #  ./vcpkg/vcpkg install
-
-# if the user already has vcpkg
 else
+  # if the user already has vcpkg
   echo "vcpkg already exists"
   echo "using existing vcpkg"
-  
-# install project dependencies from vcpkg.json file in project root
-  #  ./vcpkg/vcpkg install
 fi
 
 
+# install project dependencies from vcpkg.json file in project root
+./vcpkg/vcpkg install
+
+# make new build directory and cd into it
+rm -rf build && mkdir build && cd build
+
+# run cmake
+cmake ..
+
+# build executable
+make
