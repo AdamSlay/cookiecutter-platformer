@@ -33,6 +33,7 @@
 
 # vcpkg environment files
 vcpkg/
+vcpkg_installed/
 
 # build files
 build/
