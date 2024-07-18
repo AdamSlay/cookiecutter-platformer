@@ -1,0 +1,12 @@
+{
+  "window": {
+    "width": 1280,
+    "height": 720,
+    "title": "Cookiecutter Platformer",
+    "fullscreen": false
+  },
+  "font": {
+    "path": "../assets/fonts/SuperFunky.ttf",
+    "size": 50
+  }
+}

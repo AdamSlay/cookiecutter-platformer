@@ -11,8 +11,10 @@ find_package(SDL2_ttf CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 
 set(SOURCE_FILES 
-      src/utils.cpp
-      src/utils.h
+        src/utils.cpp
+        src/utils.h
+        src/ConfigManager.cpp
+        src/ConfigManager.h
 )
 add_library(cookiecutter-lib ${SOURCE_FILES})
 
