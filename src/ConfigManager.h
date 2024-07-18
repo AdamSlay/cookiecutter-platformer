@@ -13,6 +13,7 @@ public:
 
     int getWindowWidth() const;
     int getWindowHeight() const;
+    std::string getWindowTitle() const;
     int getFontSize() const;
     std::string getFontPath() const;
 

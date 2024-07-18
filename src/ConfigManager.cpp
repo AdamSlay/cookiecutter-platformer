@@ -34,6 +34,10 @@ int ConfigManager::getWindowHeight() const {
     return config["window"]["height"];
 }
 
+std::string ConfigManager::getWindowTitle() const {
+    return config["window"]["title"];
+}
+
 int ConfigManager::getFontSize() const {
     return config["font"]["size"];
 }
