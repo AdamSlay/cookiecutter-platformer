@@ -3,7 +3,7 @@
 GameEngine::GameEngine(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font)
     : window(window), renderer(renderer), font(font) {
 
-    SDL_RaiseWindow(window);
+    SDL_RaiseWindow(this->window);
     SDL_PumpEvents();
 }
 
