@@ -1,10 +1,23 @@
-#include "GameEngine.h"
+#include <iostream>
+#include <stdexcept>
 
-GameEngine::GameEngine(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font)
-    : window(window), renderer(renderer), font(font) {
+#include "GameEngine.h"
+#include "utils.h"
+
+GameEngine::GameEngine() {
+    this->window = nullptr;
+    this->renderer = nullptr;
+    this->font = nullptr;
+    if (Utils::initialize_resource(window, renderer, font) != 0) {
+        throw std::runtime_error("Failed to initialize resources");
+    }
 
     SDL_RaiseWindow(this->window);
     SDL_PumpEvents();
+}
+
+GameEngine::~GameEngine() {
+    Utils::close_resources(window, renderer, font);
 }
 
 void GameEngine::run() {
@@ -16,6 +29,9 @@ void GameEngine::run() {
                 quit = true;
             }
         }
+
+        // TODO: render text to screen
+
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(renderer);
         SDL_RenderPresent(renderer);
