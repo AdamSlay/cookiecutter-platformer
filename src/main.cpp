@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "ConfigManager.h"
+#include "GameEngine.h"
 #include "utils.h"
 
 
@@ -20,12 +21,9 @@ int main()
     return 1;
     }
 
-    SDL_RaiseWindow(window);
-    SDL_PumpEvents();
+    GameEngine gameEngine(window, renderer, font);
+    gameEngine.run();
 
-    // TODO: game_loop()
-
-    SDL_Delay(4000);
     Utils::close_resources(window, renderer, font);
 
     return 0;
