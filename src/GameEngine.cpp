@@ -5,6 +5,11 @@
 #include "utils.h"
 
 GameEngine::GameEngine() {
+    /**
+     * GameEngine constructor
+     * Initialize SDL2, SDL2_ttf, SDL_image, and create a window and renderer
+     */
+
     this->window = nullptr;
     this->renderer = nullptr;
     this->font = nullptr;
@@ -12,15 +17,24 @@ GameEngine::GameEngine() {
         throw std::runtime_error("Failed to initialize resources");
     }
 
-    SDL_RaiseWindow(this->window);
+    SDL_RaiseWindow(window);
     SDL_PumpEvents();
 }
 
 GameEngine::~GameEngine() {
+    /**
+     * GameEngine destructor
+     * Close the window, renderer, and font. Quit SDL2, SDL2_ttf, and SDL2_image
+     */
+
     Utils::close_resources(window, renderer, font);
 }
 
 void GameEngine::run() {
+    /**
+     * Main game loop
+     */
+
     SDL_Event event;
     bool quit = false;
     while (!quit) {
