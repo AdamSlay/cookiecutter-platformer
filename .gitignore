@@ -45,3 +45,6 @@ idea/
 
 # cmake
 cmake-build-debug/
+
+# project files
+notes.md
