@@ -1,115 +1,17 @@
-# Order of Operations
+This is a cookiecutter 2D platformer video game project template. It is intended to be used for game jams, prototyping,
+or as a starting point for a full game project. This project is written entirely in C++ and uses the [SDL2](https://www.libsdl.org/) 
+library for interacting with hardware and [vcpkg](https://vcpkg.io/en/) for managing dependencies. The project uses an 
+Entity-Component-System (ECS) architecture for game object management and a simple state machine for game state management.
 
-1. Create default ```main.cpp``` file that includes the libs you need to build:
-```cpp
-#include <iostream>
-
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
-#include <nlohmann/json.hpp>
-
-int main()
-{
-  SDL_Rect r = {0,0,10,10};
-  std::cout << r.w << std::endl;  
-  return r.x;
-}
-
-```
-
-2. Create default ```CMakeLists.txt``` file that links the libs you need to build:
-```CMake
-cmake_minimum_required(VERSION 3.10)
-
-set(CMAKE_TOOLCHAIN_FILE "./vcpkg/scripts/buildsystems/vcpkg.cmake")
-
-project(sdl_speedrun)
-
-find_package(SDL2 CONFIG REQUIRED)
-find_package(SDL2_image CONFIG REQUIRED)
-find_package(SDL2_ttf CONFIG REQUIRED)
-find_package(nlohmann_json CONFIG REQUIRED)
-
-add_executable(sdl_speedrun main.cpp)
-
-target_link_libraries(sdl_speedrun PRIVATE 
-  SDL2::SDL2-static 
-  SDL2_image::SDL2_image-static 
-  SDL2_ttf::SDL2_ttf-static
-  nlohmann_json::nlohmann_json
-)
-```
-
-3. Create ```build.sh``` file that installs ```vcpkg``` if necessary:
-```shell
-#!/bin/bash
-
-if [ ! -d "./vcpkg" ] ; then
-  # shallow clone vcpkg repo
-  git clone --depth 1 "https://github.com/microsoft/vcpkg.git"
-
-  # bootstrap vcpkg install
-  ./vcpkg/bootstrap-vcpkg.sh
-
-  # remove vcpkg .git directory
-  rm -rf ./vcpkg/.git
-
-  # install project dependencies from vcpkg.json file in project root
-  #  ./vcpkg/vcpkg install
-
-# if the user already has vcpkg
-else
-  echo "vcpkg already exists"
-  echo "using existing vcpkg"
-  
-# install project dependencies from vcpkg.json file in project root
-  #  ./vcpkg/vcpkg install
-fi
-```
-
-4. Make the build script executable and run it:
+## Installation
+After cloning the repository, you need to make the build script executable and run it to build the project: 
 ```bash
 chmod +x build.sh
 ./build.sh
 ```
-
-4. Initialize vcpkg project and create manifest file (```vcpkg.json```) via:
+The script will install the necessary dependencies using vcpkg and then build the project using CMake. 
+The script will create a ```build``` directory and place the compiled executable in that directory. You can run the 
+executable from the command line to start the game using the following command while in the project root directory:
 ```bash
-./vcpkg/vcpkg new --application
-```
-
-5. Add libs to manifest file via:
-```bash
-vcpkg add port <lib>
-```
-
-6. Make ```build``` dir and cd into it:
-```bash
-mkdir build && cd build
-```
-
-7. Run cmake to create build files via:
-```bash
-cmake ..    
-``` 
-
-8. Make executable via ``make```:
-```bash
-make
-```
-
-9. Run the executable via:
-```bash
-./sdl-speedrun
-``` 
-
-
-
-
-
-?. Set ```VCPKG_ROOT``` environment variabel:
-```BASH
-export VCPKG_ROOT=/path/to/vcpkg
-export PATH=$VCPKG_ROOT:$PATH
+./build/cookiecutter-platformer
 ```
