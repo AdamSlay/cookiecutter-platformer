@@ -34,9 +34,19 @@ void GameEngine::run() {
      * Main game loop
      */
 
+    // vars
     SDL_Event event;
     bool quit = false;
+    Uint32 lastTime = SDL_GetTicks();
+    float deltaTime = 0.0f;
+
+    // Loop
     while (!quit) {
+
+        // handle frame timing
+        std::tie(lastTime, deltaTime) = increment_time(lastTime, deltaTime);
+
+        // handle events
         while (SDL_PollEvent(&event) != 0) {
             if (event.type == SDL_QUIT) {
                 quit = true;
@@ -45,6 +55,7 @@ void GameEngine::run() {
 
         // TODO: render text to screen
 
+        // render canvas to screen
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(renderer);
         SDL_RenderPresent(renderer);
@@ -129,4 +140,20 @@ void GameEngine::close_resources() {
     TTF_Quit();
     Mix_Quit();
     SDL_Quit();
+}
+
+std::tuple<Uint32, float> GameEngine::increment_time(Uint32 lastTime, float deltaTime) {
+    /**
+     * Increment time between frames
+     *
+     * @param lastTime: The time of the last frame
+     * @param deltaTime: The time between frames
+     */
+    Uint32 currentTime = SDL_GetTicks();
+    deltaTime = (currentTime - lastTime) / 1000.0f;
+    lastTime = currentTime;
+    if (deltaTime < 1000 / 60) {
+        SDL_Delay((1000 / 60) - deltaTime);
+    }
+    return {lastTime, deltaTime};
 }
