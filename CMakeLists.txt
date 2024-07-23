@@ -10,9 +10,7 @@ find_package(SDL2_mixer CONFIG REQUIRED)
 find_package(SDL2_ttf CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 
-set(SOURCE_FILES 
-        src/utils.cpp
-        src/utils.h
+set(SOURCE_FILES
         src/ConfigManager.cpp
         src/ConfigManager.h
         src/GameEngine.cpp

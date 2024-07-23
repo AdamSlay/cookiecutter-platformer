@@ -4,6 +4,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
+#include "ConfigManager.h"
+
 
 class GameEngine {
 public:
@@ -12,9 +14,13 @@ public:
     void run();
 
 private:
-    SDL_Window* window;
-    SDL_Renderer* renderer;
-    TTF_Font* font;
+    ConfigManager& config = ConfigManager::getInstance();
+    SDL_Window* window = nullptr;
+    SDL_Renderer* renderer = nullptr;
+    TTF_Font* font = nullptr;
+
+    int initialize_resources();
+    void close_resources();
 };
 
 
