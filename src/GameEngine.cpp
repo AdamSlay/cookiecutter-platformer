@@ -15,9 +15,6 @@ GameEngine::GameEngine() {
     if (initialize_resources() != 0) {
         throw std::runtime_error("Failed to initialize Game Engine resources");
     }
-
-    SDL_RaiseWindow(window);
-    SDL_PumpEvents();
 }
 
 GameEngine::~GameEngine() {
@@ -90,7 +87,7 @@ int GameEngine::initialize_resources() {
         return 3;
     }
 
-    // Initialize PNG loading
+    // Initialize Image loading
     int imgFlags = IMG_INIT_PNG;
     if (!(IMG_Init(imgFlags) & imgFlags)) {
         std::cerr << "SDL_image could not be initialized! \nError: " << IMG_GetError() << std::endl;
@@ -104,6 +101,7 @@ int GameEngine::initialize_resources() {
     }
 
     // Load font
+    // TODO: this should be a separate, public method so multiple fonts can be loaded during runtime
     std::string fontPath = config.getFontPath();
     int fontSize = config.getFontSize();
     font = TTF_OpenFont(fontPath.c_str(), fontSize);
@@ -117,6 +115,9 @@ int GameEngine::initialize_resources() {
         std::cerr << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << std::endl;
         return 7;
     }
+
+    SDL_RaiseWindow(window);
+//    SDL_PumpEvents();
     return 0;
 }
 
