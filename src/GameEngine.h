@@ -17,10 +17,10 @@ private:
     ConfigManager& config = ConfigManager::getInstance();
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
-    TTF_Font* font = nullptr;
 
     int initialize_resources();
     void close_resources();
+    TTF_Font* load_font(std::string fontPath, int fontSize);
     std::tuple<Uint32, float> increment_time(Uint32 lastTime, float deltaTime);
 };
 

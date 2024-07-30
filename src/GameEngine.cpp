@@ -100,16 +100,6 @@ int GameEngine::initialize_resources() {
         return 5;
     }
 
-    // Load font
-    // TODO: this should be a separate, public method so multiple fonts can be loaded during runtime
-    std::string fontPath = config.getFontPath();
-    int fontSize = config.getFontSize();
-    font = TTF_OpenFont(fontPath.c_str(), fontSize);
-    if (font == nullptr) {
-        std::cerr << "Failed to load font! \nError: " << TTF_GetError() << std::endl;
-        return 6;
-    }
-
     // Initialize SDL_mixer
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
         std::cerr << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << std::endl;
@@ -132,7 +122,6 @@ void GameEngine::close_resources() {
     SDL_DestroyWindow(window);
     renderer = nullptr;
     window = nullptr;
-    font = nullptr;
 
     Mix_CloseAudio();
     SDL_Delay(100);  // Delay to allow Mix_CloseAudio() to complete to avoid "blip" sound
@@ -157,4 +146,18 @@ std::tuple<Uint32, float> GameEngine::increment_time(Uint32 lastTime, float delt
         SDL_Delay((1000 / 60) - deltaTime);
     }
     return {lastTime, deltaTime};
+}
+
+TTF_Font* GameEngine::load_font(std::string fontPath, int fontSize) {
+    /**
+     * Load a font from a file
+     *
+     * @param fontPath: The path to the font file
+     * @param fontSize: The size of the font
+     */
+    TTF_Font* font = TTF_OpenFont(fontPath.c_str(), fontSize);
+    if (font == nullptr) {
+        std::cerr << "Failed to load font! \nError: " << TTF_GetError() << std::endl;
+    }
+    return font;
 }
