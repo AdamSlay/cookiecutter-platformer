@@ -5,6 +5,7 @@
 #include <SDL2/SDL_mixer.h>
 
 #include "GameEngine.h"
+#include "RenderSystem.h"
 
 GameEngine::GameEngine() {
     /**
@@ -30,14 +31,16 @@ void GameEngine::run() {
     /**
      * Main game loop
      */
+    // Initialize Systems
+    RenderSystem renderSystem(renderer);
 
-    // vars
-    SDL_Event event;
+    // Game Loop vars
     bool quit = false;
+    SDL_Event event;
     Uint32 lastTime = SDL_GetTicks();
     float deltaTime = 0.0f;
 
-    // Loop
+    // Game Loop
     while (!quit) {
 
         // handle frame timing
@@ -50,11 +53,15 @@ void GameEngine::run() {
             }
         }
 
-        // TODO: render text to screen
-
-        // render canvas to screen
+        // reset canvas
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(renderer);
+
+        // draw current frame to canvas
+        TTF_Font *font = load_font("assets/fonts/SuperFunky.ttf", 24);
+        renderSystem.draw_text("Cookiecutter-Platformer", 100, 100, font, {255, 0, 0, 255}, 400);
+
+        // present canvas
         SDL_RenderPresent(renderer);
     }
 }

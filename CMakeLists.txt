@@ -15,6 +15,8 @@ set(SOURCE_FILES
         src/ConfigManager.h
         src/GameEngine.cpp
         src/GameEngine.h
+        src/RenderSystem.cpp
+        src/RenderSystem.h
 )
 add_library(cookiecutter-lib ${SOURCE_FILES})
 
