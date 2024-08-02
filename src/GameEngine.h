@@ -20,7 +20,6 @@ private:
 
     int initialize_resources();
     void close_resources();
-    TTF_Font* load_font(std::string fontPath, int fontSize);
     std::tuple<Uint32, float> increment_time(Uint32 lastTime, float deltaTime);
 };
 
