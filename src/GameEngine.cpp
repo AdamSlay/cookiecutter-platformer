@@ -31,19 +31,16 @@ void GameEngine::run() {
     /**
      * Main game loop
      */
-    // Initialize Systems
     RenderSystem renderSystem(renderer);
 
-    // Game Loop vars
     bool quit = false;
     SDL_Event event;
     Uint32 lastTime = SDL_GetTicks();
     float deltaTime = 0.0f;
 
-    // Game Loop
     while (!quit) {
 
-        // handle frame timing
+        // frame timing
         std::tie(lastTime, deltaTime) = increment_time(lastTime, deltaTime);
 
         // handle events
@@ -53,6 +50,7 @@ void GameEngine::run() {
             }
         }
 
+        // update systems
         renderSystem.update();
     }
 }
@@ -64,7 +62,7 @@ int GameEngine::initialize_resources() {
 
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK | SDL_INIT_AUDIO) < 0) {
-        std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
+        std::cerr << "SDL could not be initialized. \nSDL Error: " << SDL_GetError() << std::endl;
         return 1;
     }
 
@@ -74,33 +72,33 @@ int GameEngine::initialize_resources() {
     int height = config.getWindowHeight();
     window = SDL_CreateWindow(title.c_str(),SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,width,height,SDL_WINDOW_SHOWN);
     if (window == nullptr) {
-        std::cerr << "Window could not be created! \nError: " << SDL_GetError() << std::endl;
+        std::cerr << "Window could not be created. \nSDL Error: " << SDL_GetError() << std::endl;
         return 2;
     }
 
     // Initialize renderer
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (renderer == nullptr) {
-        std::cerr << "Renderer could not be initialized! \nError: " << SDL_GetError() << std::endl;
+        std::cerr << "Renderer could not be initialized. \nSDL Error: " << SDL_GetError() << std::endl;
         return 3;
     }
 
     // Initialize Image loading
     int imgFlags = IMG_INIT_PNG;
     if (!(IMG_Init(imgFlags) & imgFlags)) {
-        std::cerr << "SDL_image could not be initialized! \nError: " << IMG_GetError() << std::endl;
+        std::cerr << "SDL_image could not be initialized. \nSDL_Image Error: " << IMG_GetError() << std::endl;
         return 4;
     }
 
     // Initialize TTF font loading
     if (TTF_Init() == -1) {
-        std::cerr << "SDL_ttf could not initialize! \nError: " << TTF_GetError() << std::endl;
+        std::cerr << "SDL_ttf could not be initialized. \nSDL_TTF Error: " << TTF_GetError() << std::endl;
         return 5;
     }
 
     // Initialize SDL_mixer
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-        std::cerr << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << std::endl;
+        std::cerr << "SDL_mixer could not be initialized. \nSDL_mixer Error: " << Mix_GetError() << std::endl;
         return 7;
     }
 
@@ -122,7 +120,7 @@ void GameEngine::close_resources() {
     window = nullptr;
 
     Mix_CloseAudio();
-    SDL_Delay(100);  // Delay to allow Mix_CloseAudio() to complete to avoid "blip" sound
+    SDL_Delay(100);  // Delay allows Mix_CloseAudio() to complete and avoid "blip" sound
 
     IMG_Quit();
     TTF_Quit();
