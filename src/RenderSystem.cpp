@@ -5,15 +5,16 @@
 RenderSystem::RenderSystem(SDL_Renderer* renderer): renderer(renderer) {}
 
 void RenderSystem::update() {
-    // reset canvas
+    /**
+     * Update the render system. Draw the current frame to the screen
+     */
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     SDL_RenderClear(renderer);
 
-    // draw current frame to canvas
+    // Iterate through all entities and draw them
     TTF_Font *font = load_font("assets/fonts/SuperFunky.ttf", 24);
     draw_text("Cookiecutter-Platformer", 100, 100, font, {255, 0, 0, 255}, 400);
 
-    // present canvas
     SDL_RenderPresent(renderer);
 }
 
@@ -26,7 +27,7 @@ TTF_Font* RenderSystem::load_font(std::string fontPath, int fontSize) {
      */
     TTF_Font* font = TTF_OpenFont(fontPath.c_str(), fontSize);
     if (font == nullptr) {
-        std::cerr << "Failed to load font! \nError: " << TTF_GetError() << std::endl;
+        std::cerr << "Failed to load font: " << fontPath.c_str() << "\nSDL_TTF Error: " << TTF_GetError() << std::endl;
     }
     return font;
 }
@@ -46,14 +47,14 @@ void RenderSystem::draw_text(const std::string& text, int x, int y, TTF_Font* fo
     // Set up the surface for the text
     SDL_Surface* textSurface = TTF_RenderUTF8_Blended_Wrapped(font, text.c_str(), color, wrapLength);
     if (textSurface == nullptr) {
-        std::cout << "Unable to render text surface! SDL_ttf Error: " << TTF_GetError() << std::endl;
+        std::cout << "Unable to render text surface! \nSDL_ttf Error: " << TTF_GetError() << std::endl;
         return;
     }
 
     // Set up the texture for the text
     SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
     if (textTexture == nullptr) {
-        std::cout << "Unable to create texture from rendered text! SDL Error: " << SDL_GetError() << std::endl;
+        std::cout << "Unable to create texture from surface \nSDL Error: " << SDL_GetError() << std::endl;
         return;
     }
 
