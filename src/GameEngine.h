@@ -20,7 +20,7 @@ private:
 
     int initialize_resources();
     void close_resources();
-    std::tuple<Uint32, float> increment_time(Uint32 lastTime, float deltaTime);
+    void increment_time(Uint32& lastTime, float& deltaTime);
 };
 
 

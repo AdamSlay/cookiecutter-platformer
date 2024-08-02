@@ -41,7 +41,7 @@ void GameEngine::run() {
     while (!quit) {
 
         // frame timing
-        std::tie(lastTime, deltaTime) = increment_time(lastTime, deltaTime);
+        increment_time(lastTime, deltaTime);
 
         // handle events
         while (SDL_PollEvent(&event) != 0) {
@@ -128,7 +128,7 @@ void GameEngine::close_resources() {
     SDL_Quit();
 }
 
-std::tuple<Uint32, float> GameEngine::increment_time(Uint32 lastTime, float deltaTime) {
+void GameEngine::increment_time(Uint32& lastTime, float& deltaTime) {
     /**
      * Increment time between frames
      *
@@ -141,5 +141,4 @@ std::tuple<Uint32, float> GameEngine::increment_time(Uint32 lastTime, float delt
     if (deltaTime < 1000 / 60) {
         SDL_Delay((1000 / 60) - deltaTime);
     }
-    return {lastTime, deltaTime};
 }
