@@ -53,16 +53,7 @@ void GameEngine::run() {
             }
         }
 
-        // reset canvas
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-        SDL_RenderClear(renderer);
-
-        // draw current frame to canvas
-        TTF_Font *font = load_font("assets/fonts/SuperFunky.ttf", 24);
-        renderSystem.draw_text("Cookiecutter-Platformer", 100, 100, font, {255, 0, 0, 255}, 400);
-
-        // present canvas
-        SDL_RenderPresent(renderer);
+        renderSystem.update();
     }
 }
 
@@ -153,18 +144,4 @@ std::tuple<Uint32, float> GameEngine::increment_time(Uint32 lastTime, float delt
         SDL_Delay((1000 / 60) - deltaTime);
     }
     return {lastTime, deltaTime};
-}
-
-TTF_Font* GameEngine::load_font(std::string fontPath, int fontSize) {
-    /**
-     * Load a font from a file
-     *
-     * @param fontPath: The path to the font file
-     * @param fontSize: The size of the font
-     */
-    TTF_Font* font = TTF_OpenFont(fontPath.c_str(), fontSize);
-    if (font == nullptr) {
-        std::cerr << "Failed to load font! \nError: " << TTF_GetError() << std::endl;
-    }
-    return font;
 }

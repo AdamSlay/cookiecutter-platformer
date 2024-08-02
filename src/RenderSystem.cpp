@@ -4,6 +4,33 @@
 
 RenderSystem::RenderSystem(SDL_Renderer* renderer): renderer(renderer) {}
 
+void RenderSystem::update() {
+    // reset canvas
+    SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    SDL_RenderClear(renderer);
+
+    // draw current frame to canvas
+    TTF_Font *font = load_font("assets/fonts/SuperFunky.ttf", 24);
+    draw_text("Cookiecutter-Platformer", 100, 100, font, {255, 0, 0, 255}, 400);
+
+    // present canvas
+    SDL_RenderPresent(renderer);
+}
+
+TTF_Font* RenderSystem::load_font(std::string fontPath, int fontSize) {
+    /**
+     * Load a font from a file
+     *
+     * @param fontPath: The path to the font file
+     * @param fontSize: The size of the font
+     */
+    TTF_Font* font = TTF_OpenFont(fontPath.c_str(), fontSize);
+    if (font == nullptr) {
+        std::cerr << "Failed to load font! \nError: " << TTF_GetError() << std::endl;
+    }
+    return font;
+}
+
 void RenderSystem::draw_text(const std::string& text, int x, int y, TTF_Font* font, SDL_Color color, int wrapLength) {
     /**
      * Render text to the screen at a given position with a given color and font
