@@ -1,7 +1,5 @@
 {
   "Up": "JUMP",
   "Left": "MOVE_LEFT",
-  "Right": "MOVE_RIGHT",
-  "R": "ATTACK",
-  "Space": "DASH"
+  "Right": "MOVE_RIGHT"
 }

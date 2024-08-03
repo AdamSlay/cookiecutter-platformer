@@ -4,6 +4,15 @@
 #include <SDL2/SDL.h>
 #include <string>
 
+enum class Action
+{
+    JUMP,
+    MOVE_LEFT,
+    MOVE_RIGHT,
+    IDLE,
+    STOP_JUMP
+};
+
 
 class InputSystem {
 public:
@@ -11,8 +20,8 @@ public:
     void update(bool& quit);
 
 private:
-    std::unordered_map<SDL_Scancode, std::string> keyboardMap;
-    std::unordered_map<SDL_GameControllerButton, std::string> controllerMap;
+    std::unordered_map<SDL_Scancode, Action> keyboardMap;
+    std::unordered_map<SDL_GameControllerButton, Action> controllerMap;
     float deadZone = 0.3f;
     std::map<SDL_Scancode, bool> keyStates;
     std::map<SDL_Scancode, bool> justPressed;
@@ -25,6 +34,7 @@ private:
     void handleKeyboardInput(SDL_Event& e);
     void handleControllerInput(SDL_Event& e);
     void handleJoystickInput(SDL_Event& e);
+    Action stringToAction(const std::string& actionString);
     static SDL_Scancode mapControllerButtonToScancode(Uint8 button);
 };
 

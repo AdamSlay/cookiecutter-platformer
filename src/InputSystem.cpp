@@ -52,7 +52,7 @@ void InputSystem::loadScancodeMap(const std::string& filePath) {
     file >> j;
     for (auto& element : j.items()) {
         SDL_Scancode scancode = SDL_GetScancodeFromName(element.key().c_str());
-        std::string action = element.value();
+        Action action = stringToAction(element.value());
         keyboardMap[scancode] = action;
     }
 }
@@ -72,7 +72,7 @@ void InputSystem::loadControllerMap(const std::string& filePath) {
     file >> j;
     for (auto& element : j.items()) {
         SDL_GameControllerButton button = SDL_GameControllerGetButtonFromString(element.key().c_str());
-        std::string action = element.value();
+        Action action = stringToAction(element.value());
         controllerMap[button] = action;
     }
 }
@@ -181,5 +181,25 @@ SDL_Scancode InputSystem::mapControllerButtonToScancode(Uint8 button) {
             return SDL_SCANCODE_DOWN;  // Map down D-pad button to down arrow key
         default:
             return SDL_SCANCODE_UNKNOWN;
+    }
+}
+
+Action InputSystem::stringToAction(const std::string& actionString) {
+    /**
+     * Convert string to Action
+     *
+     * @param action: The action string
+     */
+    std::map<std::string, Action> actionMap = {
+            {"IDLE",       Action::IDLE},
+            {"JUMP",       Action::JUMP},
+            {"MOVE_LEFT",  Action::MOVE_LEFT},
+            {"MOVE_RIGHT", Action::MOVE_RIGHT}
+    };
+    auto it = actionMap.find(actionString);
+    if (it != actionMap.end()) {
+        return it->second;
+    } else {
+        return Action::IDLE;
     }
 }
