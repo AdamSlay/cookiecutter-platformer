@@ -1,8 +1,10 @@
 #ifndef COOKIECUTTER_PLATFORMER_INPUTSYSTEM_H
 #define COOKIECUTTER_PLATFORMER_INPUTSYSTEM_H
 
-#include <SDL2/SDL.h>
 #include <string>
+#include <unordered_map>
+
+#include <SDL2/SDL.h>
 
 enum class Action
 {
@@ -23,9 +25,9 @@ private:
     std::unordered_map<SDL_Scancode, Action> keyboardMap;
     std::unordered_map<SDL_GameControllerButton, Action> controllerMap;
     float deadZone = 0.3f;
-    std::map<SDL_Scancode, bool> keyStates;
-    std::map<SDL_Scancode, bool> justPressed;
-    std::map<SDL_Scancode, bool> justReleased;
+    std::unordered_map<SDL_Scancode, bool> keyStates;
+    std::unordered_map<SDL_Scancode, bool> justPressed;
+    std::unordered_map<SDL_Scancode, bool> justReleased;
     std::pair<float, float> joystickDirection;
 
     void loadInputMaps();
