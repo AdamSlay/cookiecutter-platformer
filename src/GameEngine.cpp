@@ -6,6 +6,7 @@
 
 #include "GameEngine.h"
 #include "RenderSystem.h"
+#include "InputSystem.h"
 
 GameEngine::GameEngine() {
     /**
@@ -31,6 +32,7 @@ void GameEngine::run() {
     /**
      * Main game loop
      */
+    InputSystem inputSystem;
     RenderSystem renderSystem(renderer);
 
     bool quit = false;
@@ -44,11 +46,15 @@ void GameEngine::run() {
         increment_time(lastTime, deltaTime);
 
         // handle events
-        while (SDL_PollEvent(&event) != 0) {
-            if (event.type == SDL_QUIT) {
-                quit = true;
-            }
-        }
+        // entities handle input. give them an input component that holds info about the source of their input stream
+        // they listen to that stream and update their state according to the input
+        // the stream could be a keyboard, mouse, controller, or the AI system
+
+        // ^^^ not sure about that. You could do global input handling, just take in what ever input is coming in from the hardware
+        // the input handler funnels commands to the entities that correspond to the input source(player 1, player 2, etc)
+        // entities have an input component that holds a reference to the input source that gets assiged to it
+        // input sources get assigned when they are detected
+        inputSystem.update(quit);
 
         // update systems
         renderSystem.update();

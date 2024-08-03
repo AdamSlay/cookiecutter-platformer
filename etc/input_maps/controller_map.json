@@ -1,0 +1,8 @@
+{
+  "a": "JUMP",
+  "x": "ATTACK",
+  "rightshoulder": "DASH",
+  "dpleft": "MOVE_LEFT",
+  "dpright": "MOVE_RIGHT",
+  "dpup": "JUMP"
+}
